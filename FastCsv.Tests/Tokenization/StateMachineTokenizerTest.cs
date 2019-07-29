@@ -24,7 +24,7 @@ namespace tobixdev.github.io.FastCsv.Tests.Tokenization
         [Test]
         public void Tokenize_WithNull_ThrowsArgumentNullException()
         {
-            TestDelegate act = () => _sut.Tokenize(null).ToList();
+            TestDelegate act = () => _sut.Tokenize(null).ToArray();
 
             var exception = Assert.Throws<ArgumentNullException>(act);
             Assert.That(exception.Message, Is.EqualTo(@"Value cannot be null.
@@ -36,7 +36,7 @@ Parameter name: textReader"));
         {
             var reader = new StringReader("Hello World!");
 
-            _sut.Tokenize(reader).ToList();
+            _sut.Tokenize(reader).ToArray();
 
             A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('H')).MustHaveHappened(1, Times.Exactly);
             A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('!')).MustHaveHappened(1, Times.Exactly);
@@ -47,17 +47,19 @@ Parameter name: textReader"));
         [Test]
         public void Tokenize_WithValidReader_ReturnsAllTokensReturnedByStateMachine()
         {
-            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('A')).Returns(new Token("A Token", TokenType.Value));
-            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('C')).Returns(new Token(null, TokenType.RecordDelimiter));
+            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('B')).Returns(Token.CreateValueToken("A Token"));
+            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('C')).Returns(Token.CreateValueToken("A second Token"));
             var reader = new StringReader("ABC");
 
-            var result = _sut.Tokenize(reader).ToList();
+            var result = _sut.Tokenize(reader).ToArray();
 
-            Assert.That(result.Count, Is.EqualTo(2));
+            Assert.That(result, Has.Length.EqualTo(3));
             Assert.That(result[0].Value, Is.EqualTo("A Token"));
             Assert.That(result[0].TokenType, Is.EqualTo(TokenType.Value));
-            Assert.That(result[1].Value, Is.EqualTo(null));
-            Assert.That(result[1].TokenType, Is.EqualTo(TokenType.RecordDelimiter));
+            Assert.That(result[1].Value, Is.EqualTo("A second Token"));
+            Assert.That(result[1].TokenType, Is.EqualTo(TokenType.Value));
+            Assert.That(result[2].Value, Is.EqualTo(null));
+            Assert.That(result[2].TokenType, Is.EqualTo(TokenType.RecordDelimiter));
         }
     }
 }

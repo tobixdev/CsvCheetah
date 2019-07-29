@@ -16,4 +16,11 @@
       <ProjectReference Include="..\FastCsv\FastCsv.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="TestData\SimpleWithoutHeader.csv" />
+      <Content Include="TestData\SimpleWithoutHeader.csv">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

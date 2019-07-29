@@ -10,16 +10,29 @@ namespace tobixdev.github.io.FastCsv.Tokenization.StateMachine
 
         public TokenizerStateMachine()
         {
-            State = StateHolder.Start;
+            State = StateHolder.Default;
             _tokenBuilder = new StringBuilder(c_initialBuilderCapacity);
         }
+
+        public ITokenizerState State { private get; set; }
+        public bool WasLastTokenInRecord { private get; set; }
 
         public Token? AcceptNextCharacter(char nextCharacter)
         {
             return State.AcceptNextCharacter(this, nextCharacter);
         }
 
-        public ITokenizerState State { private get; set; }
+        public Token? Finish()
+        {
+            return State.Finish(this);
+        }
+
+        public bool ShouldEmitNewRecordToken()
+        {
+            var result = WasLastTokenInRecord;
+            WasLastTokenInRecord = false;
+            return result;
+        }
 
         public string ResetToken()
         {
