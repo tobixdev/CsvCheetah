@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using System.IO;
-using tobixdev.github.io.FastCsv.Tokenization.RFC4180.StateMachine;
+using tobixdev.github.io.FastCsv.Tokenization.StateMachine;
 using tobixdev.github.io.FastCsv.Util;
 
-namespace tobixdev.github.io.FastCsv.Tokenization.RFC4180
+namespace tobixdev.github.io.FastCsv.Tokenization
 {
-    public class Rfc4180Tokenizer : ITokenizer
+    public class StateMachineTokenizer : ITokenizer
     {
         private const int ChunkSize = 1000;
         
         private readonly ITokenizerStateMachine _tokenizerStateMachine;
 
-        public Rfc4180Tokenizer(ITokenizerStateMachine tokenizerStateMachine)
+        public StateMachineTokenizer(ITokenizerStateMachine tokenizerStateMachine)
         {
             _tokenizerStateMachine = tokenizerStateMachine;
         }
@@ -21,7 +21,7 @@ namespace tobixdev.github.io.FastCsv.Tokenization.RFC4180
             ArgumentUtility.IsNotNull(nameof(textReader), textReader);
             
             var buffer = new char[ChunkSize];
-            int readChars = 0;
+            int readChars;
             while ((readChars = textReader.Read(buffer, 0, ChunkSize)) > 0)
                 foreach (var token in TokenizeBuffer(buffer, readChars))
                     yield return token;
@@ -33,7 +33,7 @@ namespace tobixdev.github.io.FastCsv.Tokenization.RFC4180
             for (var index = 0; index < readChars; index++)
             {
                 var character = buffer[index];
-                var result = _tokenizerStateMachine.AcceptNextChar(character);
+                var result = _tokenizerStateMachine.AcceptNextCharacter(character);
                 if (result.HasValue)
                     yield return result.Value;
             }

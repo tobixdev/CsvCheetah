@@ -4,13 +4,12 @@ using System.Linq;
 using FakeItEasy;
 using NUnit.Framework;
 using tobixdev.github.io.FastCsv.Tokenization;
-using tobixdev.github.io.FastCsv.Tokenization.RFC4180;
-using tobixdev.github.io.FastCsv.Tokenization.RFC4180.StateMachine;
+using tobixdev.github.io.FastCsv.Tokenization.StateMachine;
 
-namespace tobixdev.github.io.FastCsv.Tests.Tokenization.RFC4180
+namespace tobixdev.github.io.FastCsv.Tests.Tokenization
 {
     [TestFixture]
-    public class Rfc4180TokenizerTest
+    public class StateMachineTokenizerTest
     {
         private ITokenizerStateMachine _tokenizerStateMachine;
         private ITokenizer _sut;
@@ -19,7 +18,7 @@ namespace tobixdev.github.io.FastCsv.Tests.Tokenization.RFC4180
         public void SetUp()
         {
             _tokenizerStateMachine = A.Fake<ITokenizerStateMachine>();
-            _sut = new Rfc4180Tokenizer(_tokenizerStateMachine);
+            _sut = new StateMachineTokenizer(_tokenizerStateMachine);
         }
 
         [Test]
@@ -39,17 +38,17 @@ Parameter name: textReader"));
 
             _sut.Tokenize(reader).ToList();
 
-            A.CallTo(() => _tokenizerStateMachine.AcceptNextChar('H')).MustHaveHappened(1, Times.Exactly);
-            A.CallTo(() => _tokenizerStateMachine.AcceptNextChar('!')).MustHaveHappened(1, Times.Exactly);
-            A.CallTo(() => _tokenizerStateMachine.AcceptNextChar(A<char>._))
+            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('H')).MustHaveHappened(1, Times.Exactly);
+            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('!')).MustHaveHappened(1, Times.Exactly);
+            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter(A<char>._))
                 .MustHaveHappened("Hello World!".Length, Times.Exactly);
         }
 
         [Test]
         public void Tokenize_WithValidReader_ReturnsAllTokensReturnedByStateMachine()
         {
-            A.CallTo(() => _tokenizerStateMachine.AcceptNextChar('A')).Returns(new Token("A Token", TokenType.Value));
-            A.CallTo(() => _tokenizerStateMachine.AcceptNextChar('C')).Returns(new Token(null, TokenType.RecordDelimiter));
+            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('A')).Returns(new Token("A Token", TokenType.Value));
+            A.CallTo(() => _tokenizerStateMachine.AcceptNextCharacter('C')).Returns(new Token(null, TokenType.RecordDelimiter));
             var reader = new StringReader("ABC");
 
             var result = _sut.Tokenize(reader).ToList();
