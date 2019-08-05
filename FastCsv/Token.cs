@@ -19,5 +19,10 @@ namespace tobixdev.github.io.FastCsv
 
         public string Value { get; }
         public TokenType TokenType { get; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Value)}: {Value}, {nameof(TokenType)}: {TokenType}";
+        }
     }
 }

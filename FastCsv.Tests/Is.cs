@@ -2,7 +2,7 @@ using tobixdev.github.io.FastCsv.Tests.Tokenization;
 
 namespace tobixdev.github.io.FastCsv.Tests
 {
-    public class Is : NUnit.Framework.Is
+    public class IsA
     {
         public static ValueTokenConstraint ValueToken(string expectedValue)
         {

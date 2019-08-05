@@ -14,8 +14,8 @@ namespace tobixdev.github.io.FastCsv.Tokenization.StateMachine
             _tokenBuilder = new StringBuilder(c_initialBuilderCapacity);
         }
 
-        public ITokenizerState State { private get; set; }
-        public bool WasLastTokenInRecord { private get; set; }
+        public ITokenizerState State { get; set; }
+        public bool WasLastTokenInRecord { get; set; }
 
         public Token? AcceptNextCharacter(char nextCharacter)
         {
