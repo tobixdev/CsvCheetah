@@ -26,6 +26,7 @@ namespace tobixdev.github.io.FastCsv.Tokenization.StateMachine.States
 
         private Token? TokenFinished(ITokenizerStateContext stateContext)
         {
+            stateContext.State = StateHolder.Default;
             return Token.CreateValueToken(stateContext.ResetToken());
         }
 

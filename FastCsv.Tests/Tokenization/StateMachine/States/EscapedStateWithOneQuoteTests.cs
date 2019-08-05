@@ -25,6 +25,14 @@ namespace tobixdev.github.io.FastCsv.Tests.Tokenization.StateMachine.States
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Value, IsA.ValueToken("read token"));
         }
+        
+        [Test]
+        public void AcceptNextCharacter_WithComma_SetsNewState()
+        {
+           _sut.AcceptNextCharacter(TokenizerStateContext, ',');
+
+           Assert.That(TokenizerStateContext.State, Is.InstanceOf<DefaultState>());
+        }
 
         [Test]
         public void AcceptNextCharacter_WithQuote_SetsNewState()
