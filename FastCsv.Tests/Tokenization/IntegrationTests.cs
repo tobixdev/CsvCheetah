@@ -30,7 +30,7 @@ namespace tobixdev.github.io.FastCsv.Tests.Tokenization
             Assert.That(result[0], IsA.ValueToken("Hello"));
             Assert.That(result[1], IsA.ValueToken("I"));
             Assert.That(result[2], IsA.ValueToken("am"));
-            Assert.That(result[3], IsA.ValueToken("an\r"));
+            Assert.That(result[3], IsA.ValueToken("an"));
             Assert.That(result[4], IsA.RecordDelimiterToken());
             Assert.That(result[5], IsA.ValueToken("very"));
             Assert.That(result[6], IsA.ValueToken("simple"));
@@ -55,6 +55,21 @@ namespace tobixdev.github.io.FastCsv.Tests.Tokenization
             Assert.That(result[3], IsA.ValueToken("a"));
             Assert.That(result[4], IsA.ValueToken(@""""));
             Assert.That(result[5], IsA.RecordDelimiterToken());
+        }
+
+        [Test]
+        public void Tokenize_WithEscapedNewLine_ReturnsCorrectTokens()
+        {
+            Token[] result;
+            using (var reader = CreateReaderForTestFile("WithEscapedNewLine.csv"))
+            {
+                result = _sut.Tokenize(reader).ToArray();
+            }
+            
+            Assert.That(result, Has.Length.EqualTo(3));
+            Assert.That(result[0], IsA.ValueToken("Hell\r\no"));
+            Assert.That(result[1], IsA.ValueToken(@"this is one record"));
+            Assert.That(result[2], IsA.RecordDelimiterToken());
         }
     }
 }

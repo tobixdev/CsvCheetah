@@ -37,19 +37,31 @@ namespace tobixdev.github.io.FastCsv.Tests.Tokenization.StateMachine.States
         }
 
         [Test]
-        public void AcceptNextCharacter_WithNewLine_ReturnsNewValueToken()
+        public void AcceptNextCharacter_WithCarriageReturn_SetsIntermediateState()
         {
-            WithCurrentToken("read token");
-            var result = _sut.AcceptNextCharacter(TokenizerStateContext, '\n');
+            var result = _sut.AcceptNextCharacter(TokenizerStateContext, '\r');
 
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Value, IsA.ValueToken("read token"));
+            Assert.That(result, Is.Null);
+            Assert.That(TokenizerStateContext.State, Is.InstanceOf<StringMatchingState>());
         }
 
         [Test]
-        public void AcceptNextCharacter_WithNewLine_SetsWasLastTokenInRecord()
+        public void AcceptNextCharacter_OnIntermediateState_WithNewLine_ReturnsNewValueToken()
         {
-            _sut.AcceptNextCharacter(TokenizerStateContext, '\n');
+            WithCurrentToken("read token");
+            _sut.AcceptNextCharacter(TokenizerStateContext, '\r');
+            
+            var result = TokenizerStateContext.State.AcceptNextCharacter(TokenizerStateContext, '\n');
+
+            Assert.That(result, IsA.ValueToken("read token"));
+        }
+
+        [Test]
+        public void AcceptNextCharacter_OnIntermediateState_WithNewLine_SetsWasLastTokenInRecord()
+        {
+            _sut.AcceptNextCharacter(TokenizerStateContext, '\r');
+            
+            TokenizerStateContext.State.AcceptNextCharacter(TokenizerStateContext, '\n');
 
             Assert.That(TokenizerStateContext.WasLastTokenInRecord, Is.True);
         }

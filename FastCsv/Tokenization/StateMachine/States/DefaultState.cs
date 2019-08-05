@@ -10,16 +10,16 @@ namespace tobixdev.github.io.FastCsv.Tokenization.StateMachine.States
                     return TokenFinished(stateContext);
                 case '"':
                     return Quote(stateContext);
-                case '\n': // TODO: RFC conformity would require \r\n
-                    return RecordFinished(stateContext);
+                case '\r':
+                    return StartOfRecordDelimiter(stateContext);
                 default:
                     return NormalCharacter(stateContext, character);
             }
         }
 
-        public override Token? Finish(ITokenizerStateContext tokenizerStateMachine)
+        public override Token? Finish(ITokenizerStateContext stateContext)
         {
-            return Token.CreateValueToken(tokenizerStateMachine.ResetToken());
+            return Token.CreateValueToken(stateContext.ResetToken());
         }
 
         private Token? TokenFinished(ITokenizerStateContext stateContext)
@@ -34,10 +34,15 @@ namespace tobixdev.github.io.FastCsv.Tokenization.StateMachine.States
             return null;
         }
 
-        private Token? RecordFinished(ITokenizerStateContext stateContext)
+        private Token? StartOfRecordDelimiter(ITokenizerStateContext stateContext)
         {
-            stateContext.WasLastTokenInRecord = true;
-            return Token.CreateValueToken(stateContext.ResetToken());
+            var intermediateState = new StringMatchingState(this, "\n", state =>
+            {
+                stateContext.WasLastTokenInRecord = true;
+                return Token.CreateValueToken(stateContext.ResetToken());
+            });
+            stateContext.State = intermediateState;
+            return null;
         }
 
         private Token? NormalCharacter(ITokenizerStateContext stateContext, char character)
@@ -45,6 +50,5 @@ namespace tobixdev.github.io.FastCsv.Tokenization.StateMachine.States
             stateContext.AppendCharacter(character);
             return null;
         }
-
     }
 }

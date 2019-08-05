@@ -13,7 +13,7 @@ namespace tobixdev.github.io.FastCsv.Tokenization.StateMachine.States
             }
         }
 
-        public override Token? Finish(ITokenizerStateContext tokenizerStateMachine)
+        public override Token? Finish(ITokenizerStateContext stateContext)
         {
             throw new TokenizationException("Escaped field not closed. Unexpected end of input.");
         }
