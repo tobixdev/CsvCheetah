@@ -29,28 +29,16 @@ namespace tobixdev.github.io.FastCsv.Tests.Tokenization
             }
             
             Assert.That(result, Has.Length.EqualTo(10));
-            AssertValueToken(result[0], "Hallo"); // TODO: Build assertions
-            AssertValueToken(result[1], "ich");
-            AssertValueToken(result[2], "bin");
-            AssertValueToken(result[3], "ein\r");
-            AssertRecordDelimiterToken(result[4]);
-            AssertValueToken(result[5], "sehr");
-            AssertValueToken(result[6], "einfaches");
-            AssertValueToken(result[7], "csv");
-            AssertValueToken(result[8], "file");
-            AssertRecordDelimiterToken(result[9]);
-        }
-
-        private void AssertValueToken(Token token, string expectedValue)
-        {
-            Assert.That(token.TokenType, Is.EqualTo(TokenType.Value));
-            Assert.That(token.Value, Is.EqualTo(expectedValue));
-        }
-
-        private void AssertRecordDelimiterToken(Token token)
-        {
-            Assert.That(token.TokenType, Is.EqualTo(TokenType.RecordDelimiter));
-            Assert.That(token.Value, Is.EqualTo(null));
+            Assert.That(result[0], Is.ValueToken("Hallo")); // TODO: Build assertions
+            Assert.That(result[1], Is.ValueToken("ich"));
+            Assert.That(result[2], Is.ValueToken("bin"));
+            Assert.That(result[3], Is.ValueToken("ein\r"));
+            Assert.That(result[4], Is.RecordDelimiterToken());
+            Assert.That(result[5], Is.ValueToken("sehr"));
+            Assert.That(result[6], Is.ValueToken("einfaches"));
+            Assert.That(result[7], Is.ValueToken("csv"));
+            Assert.That(result[8], Is.ValueToken("file"));
+            Assert.That(result[9], Is.RecordDelimiterToken());
         }
     }
 }

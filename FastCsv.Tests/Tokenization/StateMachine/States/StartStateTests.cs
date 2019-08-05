@@ -21,11 +21,11 @@ namespace tobixdev.github.io.FastCsv.Tests.Tokenization.StateMachine.States
         [Test]
         public void AcceptNextCharacter_WithComma_ReturnsNewValueToken()
         {
-            A.CallTo(() => _tokenizerStateContext.ResetToken()).Returns("");
+            A.CallTo(() => _tokenizerStateContext.ResetToken()).Returns("read token");
             var result = _sut.AcceptNextCharacter(_tokenizerStateContext, ',');
             
             Assert.That(result.HasValue, Is.True);
-            Assert.That(result.Value.Value, Is.EqualTo(""));
+            Assert.That(result.Value.Value, Is.EqualTo("read token"));
             Assert.That(result.Value.TokenType, Is.EqualTo(TokenType.Value));
         }
 
