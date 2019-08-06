@@ -27,8 +27,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization
             void Act() => _sut.Tokenize(null).ToArray();
 
             var exception = Assert.Throws<ArgumentNullException>(Act);
-            Assert.That(exception.Message, Is.EqualTo(@"Value cannot be null.
-Parameter name: textReader"));
+            Assert.That(exception.Message, Is.EqualTo(@"Value cannot be null. (Parameter 'textReader')"));
         }
 
         [Test]
