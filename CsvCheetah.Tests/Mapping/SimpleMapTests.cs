@@ -52,5 +52,24 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
             var exception = Assert.Throws<MappingException>(Act);
             Assert.That(exception.Message, Is.EqualTo("No property for column 0 found."));
         }
+
+        [Test]
+        public void ColumnCount_ForEmptyMap_ReturnsZero()
+        {
+            var result = _sut.ColumnCount;
+            
+            Assert.That(result, Is.Zero);
+        }
+
+        [Test]
+        public void ColumnCount_ForNonEmptyMap_ReturnsCorrectAmount()
+        {
+            _sut.AddMapping(0, TestDataClass.ExpressionToFieldA);
+            _sut.AddMapping(2, TestDataClass.ExpressionToFieldB);
+            
+            var result = _sut.ColumnCount;
+            
+            Assert.That(result, Is.EqualTo(3));
+        }
     }
 }

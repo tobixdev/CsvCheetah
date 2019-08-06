@@ -7,5 +7,6 @@ namespace tobixdev.github.io.CsvCheetah.Mapping
     {
         bool HasDefinitionForColumn(int columnIndex);
         Expression<Func<T, string>> GetPropertyExpression(int columnIndex);
+        int ColumnCount { get; }
     }
 }
