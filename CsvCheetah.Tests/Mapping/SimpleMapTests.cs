@@ -37,12 +37,11 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
         [Test]
         public void GetPropertyExpression_ForDefinedColumn_ReturnsExpression()
         {
-            Expression<Func<TestDataClass, string>> expression = t => t.FieldA;
-            _sut.AddMapping(0, expression);
+            _sut.AddMapping(0, TestDataClass.ExpressionToFieldA);
             
             var result = _sut.GetPropertyExpression(0);
             
-            Assert.That(result, Is.SameAs(expression));
+            Assert.That(result, Is.SameAs(TestDataClass.ExpressionToFieldA));
         }
         
         [Test]
