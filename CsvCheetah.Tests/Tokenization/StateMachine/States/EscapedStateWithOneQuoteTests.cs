@@ -54,9 +54,9 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization.StateMachine.States
         [Test]
         public void AcceptNextCharacter_WithNonSpecialCharacter_AddsCharacterToCurrentToken()
         {
-           TestDelegate act = () => _sut.AcceptNextCharacter(TokenizerStateContext, 'x');
+            void Act() => _sut.AcceptNextCharacter(TokenizerStateContext, 'x');
 
-           var exception = Assert.Throws<TokenizationException>(act);
+            var exception = Assert.Throws<TokenizationException>(Act);
            Assert.That(exception.Message, Is.EqualTo("Text followed closing qoute, in an escaped field."));
         }
         

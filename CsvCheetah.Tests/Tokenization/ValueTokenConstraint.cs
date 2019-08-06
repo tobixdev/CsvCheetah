@@ -14,12 +14,11 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization
 
         public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            var token = actual as Token?;
-            if (token == null) 
+            if (!(actual is Token token)) 
                 return new ConstraintResult(this, actual, ConstraintStatus.Error);
 
-            var isSuccess = string.Equals(token.Value.Value, _expectedValue, StringComparison.InvariantCulture) &&
-                            token.Value.TokenType == TokenType.Value;
+            var isSuccess = string.Equals(token.Value, _expectedValue, StringComparison.InvariantCulture) &&
+                            token.TokenType == TokenType.Value;
             return new ConstraintResult(this, token, isSuccess);
         }
     }

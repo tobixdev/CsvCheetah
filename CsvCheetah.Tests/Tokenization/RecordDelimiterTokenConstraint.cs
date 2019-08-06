@@ -7,11 +7,10 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization
 
         public override ConstraintResult ApplyTo<TActual>(TActual actual)
         {
-            var token = actual as Token?;
-            if (token == null) 
+            if (!(actual is Token token)) 
                 return new ConstraintResult(this, actual, ConstraintStatus.Error);
             
-            var isSuccess = token.Value.TokenType == TokenType.RecordDelimiter;
+            var isSuccess = token.TokenType == TokenType.RecordDelimiter;
             return new ConstraintResult(this, token, isSuccess);
         }
     }

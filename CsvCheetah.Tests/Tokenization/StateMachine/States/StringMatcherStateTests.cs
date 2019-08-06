@@ -64,7 +64,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization.StateMachine.States
         }
 
         [Test]
-        public void Finish_WithPartiallyMatchedString_FallbackToOriginialState()
+        public void Finish_WithPartiallyMatchedString_FallbackToOriginalState()
         {
             var sut = CreateFor("abc");
             sut.AcceptNextCharacter(TokenizerStateContext, 'a');
