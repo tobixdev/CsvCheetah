@@ -1,2 +1,2 @@
-# FastCsv
-.NET library for fast csv processing.
+# CsvCheetah
+.NET library for csv processing.
