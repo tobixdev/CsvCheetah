@@ -7,7 +7,7 @@ namespace tobixdev.github.io.CsvCheetah
             return new Token(value, TokenType.Value);
         }
 
-        public static readonly Token DelimiterToken = new Token(null, TokenType.RecordDelimiter);
+        public static readonly Token DelimiterToken = new Token("", TokenType.RecordDelimiter);
 
         private Token(string value, TokenType tokenType)
         {
