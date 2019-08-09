@@ -6,12 +6,12 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
     [TestFixture]
     public class MapCompilerTests
     {
-        private IMapCompiler<TestDataClass> _sut;
+        private IMapperFactory<TestDataClass> _sut;
 
         [SetUp]
         public void SetUp()
         {
-            _sut = new MapCompiler<TestDataClass>();
+            _sut = new MapperFactory<TestDataClass>();
         }
 
         [Test]
@@ -19,7 +19,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
         {
             var map = new SimpleMap<TestDataClass>();
 
-            void Act() => _sut.CompileMap(map);
+            void Act() => _sut.CreateForMap(map);
             
             Assert.DoesNotThrow(Act);
         }
