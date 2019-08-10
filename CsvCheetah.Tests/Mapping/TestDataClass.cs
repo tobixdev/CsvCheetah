@@ -5,8 +5,8 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
 {
     public class TestDataClass
     {
-        public static readonly Expression<Func<TestDataClass, string>> ExpressionToFieldA = t => t.FieldA;
-        public static readonly Expression<Func<TestDataClass, string>> ExpressionToFieldB = t => t.FieldB;
+        public const string PropertyNameFieldA = "FieldA";
+        public const string PropertyNameFieldB = "FieldB";
         public string FieldA { get; set; }
         public string FieldB { get; set; }
     }

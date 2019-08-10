@@ -57,7 +57,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization
             Assert.That(result[0].TokenType, Is.EqualTo(TokenType.Value));
             Assert.That(result[1].Value, Is.EqualTo("A second Token"));
             Assert.That(result[1].TokenType, Is.EqualTo(TokenType.Value));
-            Assert.That(result[2].Value, Is.EqualTo(null));
+            Assert.That(result[2].Value, Is.Empty);
             Assert.That(result[2].TokenType, Is.EqualTo(TokenType.RecordDelimiter));
         }
     }

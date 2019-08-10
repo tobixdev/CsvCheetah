@@ -25,15 +25,15 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
         [Test]
         public void Build_WithNonEmptyBuilder_ReturnsMapWithCorrectEntries()
         {
-            _sut.WithColumn(0, TestDataClass.ExpressionToFieldA)
-                .WithColumn(1, TestDataClass.ExpressionToFieldB);
+            _sut.WithColumn(0, t => t.FieldA)
+                .WithColumn(1, t => t.FieldB);
             
             var result = _sut.Build();
             
             Assert.That(result.HasDefinitionForColumn(0), Is.True);
-            Assert.That(result.GetPropertyExpression(0), Is.SameAs(TestDataClass.ExpressionToFieldA));
+            Assert.That(result.GetTargetPropertyName(0), Is.EqualTo(TestDataClass.PropertyNameFieldA));
             Assert.That(result.HasDefinitionForColumn(1), Is.True);
-            Assert.That(result.GetPropertyExpression(1), Is.SameAs(TestDataClass.ExpressionToFieldB));
+            Assert.That(result.GetTargetPropertyName(1), Is.EqualTo(TestDataClass.PropertyNameFieldB));
         }
     }
 }
