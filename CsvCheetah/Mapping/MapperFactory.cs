@@ -29,21 +29,24 @@ namespace tobixdev.github.io.CsvCheetah.Mapping
 
         private static Action<T, object> GetPropSetter(string propertyName)
         {
-            var property = typeof(T).GetProperty("propertyName");
+            var property = typeof(T).GetProperty(propertyName);
             
             if(property == null)
                 throw new MappingException($"Property {propertyName} does not exists on type {typeof(T)}.");
 
             var propertyType = property.PropertyType;
             
-            var paramExpression = Expression.Parameter(typeof(T));
-            var paramExpression2 = Expression.Parameter(propertyType, propertyName);
+            var targetType = Expression.Parameter(typeof(T));
+            var valueExpression = Expression.Parameter(typeof(object), "value");
+            var convertedValueExpression = Expression.Convert(valueExpression, propertyType);
+            
+            var propertyExpression = Expression.Property(targetType, propertyName);
 
-            var propertyGetterExpression = Expression.Property(paramExpression, propertyName);
+            var assignmentExpression = Expression.Assign(propertyExpression, convertedValueExpression);
 
             return Expression.Lambda<Action<T, object>>
             (
-                Expression.Assign(propertyGetterExpression, paramExpression2), paramExpression, paramExpression2
+                assignmentExpression, targetType, valueExpression
             ).Compile();
         }
     }
