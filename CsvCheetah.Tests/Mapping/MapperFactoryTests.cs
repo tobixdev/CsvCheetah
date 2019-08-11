@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using tobixdev.github.io.CsvCheetah.Mapping;
@@ -5,7 +6,7 @@ using tobixdev.github.io.CsvCheetah.Mapping;
 namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
 {
     [TestFixture]
-    public class MapperFactoryTests
+    public class MapperFactoryTests : MapperUnitTest
     {
         private IMapperFactory<TestDataClass> _sut;
 
@@ -34,12 +35,14 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
 
             var result = _sut.CreateForMap(map);
 
-            Assert.That(result, Is.Not.Null);
-            var mapped = result.Map(new[]
-                {Token.CreateValueToken("A"), Token.CreateValueToken("B"), Token.DelimiterToken}).ToArray();
+            var mapped = result.Map(CreateTokenStreamWithDelimiter("A", "B")).ToArray();
             Assert.That(mapped, Has.Length.EqualTo(1));
-            Assert.That(mapped[0].FieldA, Is.EqualTo("A"));
-            Assert.That(mapped[0].FieldB, Is.EqualTo("B"));
+            AssertTestDataClass(mapped[0], "A", "B");
+        }
+
+        private static IEnumerable<Token> CreateTokenStreamWithDelimiter(params string[] values)
+        {
+            return values.Select(Token.CreateValueToken).Append(Token.DelimiterToken);
         }
     }
 }
