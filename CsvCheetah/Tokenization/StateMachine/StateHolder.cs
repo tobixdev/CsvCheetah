@@ -13,9 +13,9 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine
 
         public StateHolder(ICsvCheetahConfiguration configuration)
         {
-            Default = new DefaultState(this);
+            Default = new DefaultState(this, configuration);
             Escaped = new EscapedState(this);
-            EscapedWithOneQuote = new EscapedStateWithOneQuote(this);
+            EscapedWithOneQuote = new EscapedStateWithOneQuote(this, configuration);
         }
     }
 }

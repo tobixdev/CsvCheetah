@@ -1,27 +1,30 @@
+using tobixdev.github.io.CsvCheetah.Configuration;
+
 namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 {
     public class DefaultState : StateBase
     {
-        private StateHolder _stateHolder;
-        
-        public DefaultState(StateHolder stateHolder)
+        private readonly StateHolder _stateHolder;
+        private readonly ICsvCheetahConfiguration _configuration;
+
+        public DefaultState(StateHolder stateHolder, ICsvCheetahConfiguration configuration)
         {
             _stateHolder = stateHolder;
+            _configuration = configuration;
         }
 
         public override Token? AcceptNextCharacter(ITokenizerStateContext stateContext, char character)
         {
-            switch (character)
-            {
-                case ',':
-                    return TokenFinished(stateContext);
-                case '"':
-                    return Quote(stateContext);
-                case '\r':
-                    return StartOfRecordDelimiter(stateContext);
-                default:
-                    return NormalCharacter(stateContext, character);
-            }
+            if (character == _configuration.ColumnDelimiter)
+                return TokenFinished(stateContext);
+            
+            if (character == '"')
+                return Quote(stateContext);
+            
+            if (character == '\r')
+                return StartOfRecordDelimiter(stateContext);
+            
+            return NormalCharacter(stateContext, character);
         }
 
         public override Token? Finish(ITokenizerStateContext stateContext)
@@ -38,17 +41,6 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
         {
             stateContext.State = _stateHolder.Escaped;
             // TODO Throw error, if quote not at start
-            return null;
-        }
-
-        private Token? StartOfRecordDelimiter(ITokenizerStateContext stateContext)
-        {
-            var intermediateState = new StringMatchingState(this, "\n", state =>
-            {
-                stateContext.WasLastTokenInRecord = true;
-                return Token.CreateValueToken(stateContext.ResetToken());
-            });
-            stateContext.State = intermediateState;
             return null;
         }
 

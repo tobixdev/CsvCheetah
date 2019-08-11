@@ -1,27 +1,30 @@
+using tobixdev.github.io.CsvCheetah.Configuration;
+
 namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 {
     public class EscapedStateWithOneQuote : StateBase
     {
         private readonly StateHolder _stateHolder;
+        private readonly ICsvCheetahConfiguration _configuration;
 
-        public EscapedStateWithOneQuote(StateHolder stateHolder)
+        public EscapedStateWithOneQuote(StateHolder stateHolder, ICsvCheetahConfiguration configuration)
         {
             _stateHolder = stateHolder;
+            _configuration = configuration;
         }
 
         public override Token? AcceptNextCharacter(ITokenizerStateContext stateContext, char character)
         {
-            switch (character)
-            {
-                case '"':
-                    return Quote(stateContext);
-                case ',':
-                    return TokenFinished(stateContext);
-                case '\n':
-                    return RecordFinished(stateContext);
-                default:
-                    return NormalCharacter();
-            }
+            if (character == '"')
+                return Quote(stateContext);
+            
+            if (character == _configuration.ColumnDelimiter)
+                return TokenFinished(stateContext);
+            
+            if (character == '\n')
+                return RecordFinished(stateContext);
+            
+            return NormalCharacter();
         }
 
         public override Token? Finish(ITokenizerStateContext stateContext)
