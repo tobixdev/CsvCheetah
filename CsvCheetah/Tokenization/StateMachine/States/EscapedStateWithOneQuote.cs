@@ -18,7 +18,7 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
             if (character == '"')
                 return Quote(stateContext);
             
-            if (character == _configuration.ColumnDelimiter)
+            if (character == _configuration.FieldDelimiter)
                 return TokenFinished(stateContext);
             
             if (character == '\n')

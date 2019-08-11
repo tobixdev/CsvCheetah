@@ -15,7 +15,7 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 
         public override Token? AcceptNextCharacter(ITokenizerStateContext stateContext, char character)
         {
-            if (character == _configuration.ColumnDelimiter)
+            if (character == _configuration.FieldDelimiter)
                 return TokenFinished(stateContext);
             
             if (character == '"')

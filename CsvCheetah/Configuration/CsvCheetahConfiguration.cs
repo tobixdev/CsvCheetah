@@ -4,9 +4,9 @@ namespace tobixdev.github.io.CsvCheetah.Configuration
     {
         public CsvCheetahConfiguration()
         {
-            ColumnDelimiter = ',';
+            FieldDelimiter = ',';
         }
 
-        public char ColumnDelimiter { get; set; }
+        public char FieldDelimiter { get; set; }
     }
 }

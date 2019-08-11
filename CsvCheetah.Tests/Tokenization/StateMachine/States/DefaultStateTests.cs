@@ -10,18 +10,33 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization.StateMachine.States
     public class DefaultStateTests : StateTestsBase
     {
         private ITokenizerState _sut;
+        private CsvCheetahConfiguration _configuration;
 
         [SetUp]
         public void SetUp()
         {
-            _sut = new DefaultState(A.Fake<StateHolder>(), new CsvCheetahConfiguration());
+            _configuration = new CsvCheetahConfiguration();
+            _sut = new DefaultState(A.Fake<StateHolder>(), _configuration);
         }
 
         [Test]
-        public void AcceptNextCharacter_WithComma_ReturnsNewValueToken()
+        public void AcceptNextCharacter_WithDefaultFieldDelimiter_ReturnsNewValueToken()
         {
             WithCurrentToken("read token");
+            
             var result = _sut.AcceptNextCharacter(TokenizerStateContext, ',');
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Value, IsA.ValueToken("read token"));
+        }
+
+        [Test]
+        public void AcceptNextCharacter_WithNonDefaultFieldDelimiter_ReturnsNewValueToken()
+        {
+            WithCurrentToken("read token");
+            _configuration.FieldDelimiter = ';';
+
+            var result = _sut.AcceptNextCharacter(TokenizerStateContext, ';');
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Value, IsA.ValueToken("read token"));
