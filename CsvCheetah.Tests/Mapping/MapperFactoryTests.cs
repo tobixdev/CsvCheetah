@@ -39,10 +39,5 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
             Assert.That(mapped, Has.Length.EqualTo(1));
             AssertTestDataClass(mapped[0], "A", "B");
         }
-
-        private static IEnumerable<Token> CreateTokenStreamWithDelimiter(params string[] values)
-        {
-            return values.Select(Token.CreateValueToken).Append(Token.DelimiterToken);
-        }
     }
 }
