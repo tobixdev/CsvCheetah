@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace tobixdev.github.io.CsvCheetah.Mapping
+namespace tobixdev.github.io.CsvCheetah.Mapping.Maps
 {
     public class ColumnMapBuilder<T> : IColumnMapBuilder<T> where T : class
     {

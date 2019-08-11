@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using tobixdev.github.io.CsvCheetah.Mapping;
+using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
+using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 using tobixdev.github.io.CsvCheetah.Tokenization;
 using tobixdev.github.io.CsvCheetah.Tokenization.StateMachine;
 

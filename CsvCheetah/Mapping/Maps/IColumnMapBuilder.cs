@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace tobixdev.github.io.CsvCheetah.Mapping
+namespace tobixdev.github.io.CsvCheetah.Mapping.Maps
 {
     public interface IColumnMapBuilder<T>
     {

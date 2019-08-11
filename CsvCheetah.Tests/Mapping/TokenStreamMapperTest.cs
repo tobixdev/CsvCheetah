@@ -1,6 +1,8 @@
 using System.Linq;
 using NUnit.Framework;
 using tobixdev.github.io.CsvCheetah.Mapping;
+using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
+using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 
 namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
 {
@@ -49,6 +51,16 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
             var result = _sut.Map(tokenStream).ToArray();
             
             AssertTestDataClass(result[0], "Some Value", "Second Value");
+        }
+
+        [Test]
+        public void Map_WithMoreTokensAsPropertiesRecord_ReturnsCorrectRecord()
+        {
+            var tokenStream = CreateTokenStreamWithDelimiter("1", "2", "3", "4", "5");
+            
+            var result = _sut.Map(tokenStream).ToArray();
+            
+            AssertTestDataClass(result[0], "1", "2");
         }
 
         [Test]

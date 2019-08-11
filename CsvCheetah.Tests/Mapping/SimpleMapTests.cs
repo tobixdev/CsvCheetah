@@ -2,6 +2,7 @@ using System;
 using System.Linq.Expressions;
 using NUnit.Framework;
 using tobixdev.github.io.CsvCheetah.Mapping;
+using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 
 namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
 {

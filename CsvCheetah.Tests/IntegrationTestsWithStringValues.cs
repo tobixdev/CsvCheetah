@@ -1,6 +1,8 @@
 using System.Linq;
 using NUnit.Framework;
 using tobixdev.github.io.CsvCheetah.Mapping;
+using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
+using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 using tobixdev.github.io.CsvCheetah.Tokenization;
 using tobixdev.github.io.CsvCheetah.Tokenization.StateMachine;
 

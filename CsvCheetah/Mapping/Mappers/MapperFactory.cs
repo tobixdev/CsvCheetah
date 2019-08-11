@@ -1,7 +1,8 @@
 using System;
 using System.Linq.Expressions;
+using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 
-namespace tobixdev.github.io.CsvCheetah.Mapping
+namespace tobixdev.github.io.CsvCheetah.Mapping.Mappers
 {
     public class MapperFactory<T> : IMapperFactory<T> where T : class
     {

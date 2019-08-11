@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace tobixdev.github.io.CsvCheetah.Mapping
+namespace tobixdev.github.io.CsvCheetah.Mapping.Maps
 {
     public class SimpleMap<T> : IMutableMap<T>
     {

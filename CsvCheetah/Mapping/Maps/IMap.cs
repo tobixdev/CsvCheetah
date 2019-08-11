@@ -1,4 +1,4 @@
-namespace tobixdev.github.io.CsvCheetah.Mapping
+namespace tobixdev.github.io.CsvCheetah.Mapping.Maps
 {
     public interface IMap<T>
     {
