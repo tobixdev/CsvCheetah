@@ -4,7 +4,7 @@ using tobixdev.github.io.CsvCheetah.Mapping;
 using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
 using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 
-namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
+namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Mappers
 {
     [TestFixture]
     public class TokenStreamMapperTest : MapperUnitTest

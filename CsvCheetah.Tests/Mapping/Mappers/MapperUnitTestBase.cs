@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
-namespace tobixdev.github.io.CsvCheetah.Tests.Mapping
+namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Mappers
 {
     public abstract class MapperUnitTest
     {
