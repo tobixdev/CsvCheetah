@@ -17,7 +17,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests
         [SetUp]
         public void SetUp()
         {
-            var stateMachine = new TokenizerStateMachine();
+            var stateMachine = new TokenizerStateMachine(StateHolder.DefaultConfiguration);
             _tokenizer = new StateMachineTokenizer(stateMachine);
             
             var map = new ColumnMapBuilder<State>()

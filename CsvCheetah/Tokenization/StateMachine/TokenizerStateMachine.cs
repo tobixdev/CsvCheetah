@@ -4,14 +4,14 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine
 {
     public class TokenizerStateMachine : ITokenizerStateMachine, ITokenizerStateContext
     {
-        private const int c_initialBuilderCapacity = 500;
+        private const int InitialBuilderCapacity = 500;
 
         private readonly StringBuilder _tokenBuilder;
 
-        public TokenizerStateMachine()
+        public TokenizerStateMachine(StateHolder stateHolder)
         {
-            State = StateHolder.Default;
-            _tokenBuilder = new StringBuilder(c_initialBuilderCapacity);
+            State = stateHolder.Default;
+            _tokenBuilder = new StringBuilder(InitialBuilderCapacity);
         }
 
         public ITokenizerState State { get; set; }

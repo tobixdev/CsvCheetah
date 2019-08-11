@@ -2,6 +2,13 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 {
     public class EscapedStateWithOneQuote : StateBase
     {
+        private readonly StateHolder _stateHolder;
+
+        public EscapedStateWithOneQuote(StateHolder stateHolder)
+        {
+            _stateHolder = stateHolder;
+        }
+
         public override Token? AcceptNextCharacter(ITokenizerStateContext stateContext, char character)
         {
             switch (character)
@@ -10,7 +17,7 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
                     return Quote(stateContext);
                 case ',':
                     return TokenFinished(stateContext);
-                case '\n': // TODO: RFC conformity would require \r\n
+                case '\n':
                     return RecordFinished(stateContext);
                 default:
                     return NormalCharacter();
@@ -24,13 +31,13 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 
         private Token? TokenFinished(ITokenizerStateContext stateContext)
         {
-            stateContext.State = StateHolder.Default;
+            stateContext.State = _stateHolder.Default;
             return Token.CreateValueToken(stateContext.ResetToken());
         }
 
         private Token? Quote(ITokenizerStateContext stateContext)
         {
-            stateContext.State = StateHolder.Escaped;
+            stateContext.State = _stateHolder.Escaped;
             stateContext.AppendCharacter('"');
             return null;
         }

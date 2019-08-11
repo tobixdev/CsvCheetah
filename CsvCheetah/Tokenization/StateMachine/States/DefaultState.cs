@@ -2,6 +2,13 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 {
     public class DefaultState : StateBase
     {
+        private StateHolder _stateHolder;
+        
+        public DefaultState(StateHolder stateHolder)
+        {
+            _stateHolder = stateHolder;
+        }
+
         public override Token? AcceptNextCharacter(ITokenizerStateContext stateContext, char character)
         {
             switch (character)
@@ -29,7 +36,7 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 
         private Token? Quote(ITokenizerStateContext stateContext)
         {
-            stateContext.State = StateHolder.Escaped;
+            stateContext.State = _stateHolder.Escaped;
             // TODO Throw error, if quote not at start
             return null;
         }

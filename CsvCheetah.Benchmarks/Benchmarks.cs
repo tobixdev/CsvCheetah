@@ -31,9 +31,9 @@ longer column"",but, there, is still more,
 
             for (var i = 0; i < LineCount; i++)
                 await fileWriter.WriteAsync(Line);
-            
 
-            _tokenizer = new StateMachineTokenizer(new TokenizerStateMachine());
+            var stateMachine = new TokenizerStateMachine(StateHolder.DefaultConfiguration);
+            _tokenizer = new StateMachineTokenizer(stateMachine);
             
             var map = new ColumnMapBuilder<BenchmarkDataClass>()
                 .WithColumn(0, c => c.Field1)

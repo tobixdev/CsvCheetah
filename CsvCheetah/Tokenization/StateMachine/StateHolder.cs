@@ -1,11 +1,21 @@
+using tobixdev.github.io.CsvCheetah.Configuration;
 using tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States;
 
 namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine
 {
-    public static class StateHolder
+    public class StateHolder
     {
-        public static readonly ITokenizerState Default = new DefaultState();
-        public static readonly ITokenizerState Escaped = new EscapedState();
-        public static readonly ITokenizerState EscapedWithOneQuote = new EscapedStateWithOneQuote();
+        public static readonly StateHolder DefaultConfiguration = new StateHolder(new CsvCheetahConfiguration());
+        
+        public readonly ITokenizerState Default;
+        public readonly ITokenizerState Escaped;
+        public readonly ITokenizerState EscapedWithOneQuote;
+
+        public StateHolder(ICsvCheetahConfiguration configuration)
+        {
+            Default = new DefaultState(this);
+            Escaped = new EscapedState(this);
+            EscapedWithOneQuote = new EscapedStateWithOneQuote(this);
+        }
     }
 }

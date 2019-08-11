@@ -13,7 +13,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization
         [SetUp]
         public void SetUp()
         {
-            var stateMachine = new TokenizerStateMachine();
+            var stateMachine = new TokenizerStateMachine(StateHolder.DefaultConfiguration);
             _sut = new StateMachineTokenizer(stateMachine);
         }
 

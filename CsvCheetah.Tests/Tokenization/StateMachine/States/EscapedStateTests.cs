@@ -1,3 +1,4 @@
+using FakeItEasy;
 using NUnit.Framework;
 using tobixdev.github.io.CsvCheetah.Tokenization.StateMachine;
 using tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States;
@@ -12,7 +13,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization.StateMachine.States
         [SetUp]
         public void SetUp()
         {
-            _sut = new EscapedState();
+            _sut = new EscapedState(A.Fake<StateHolder>());
         }
         
         [Test]
