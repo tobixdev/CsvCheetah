@@ -7,9 +7,10 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization
 {
     public class StateMachineTokenizer : ITokenizer
     {
-        private const int ChunkSize = 1000;
+        private const int ChunkSize = 1024 * 1024;
 
         private readonly ITokenizerStateMachine _tokenizerStateMachine;
+        private readonly char[] _buffer = new char[ChunkSize];
 
         public StateMachineTokenizer(ITokenizerStateMachine tokenizerStateMachine)
         {
@@ -20,10 +21,9 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization
         {
             ArgumentUtility.IsNotNull(nameof(textReader), textReader);
 
-            var buffer = new char[ChunkSize];
             int readChars;
-            while ((readChars = textReader.Read(buffer, 0, ChunkSize)) > 0)
-                foreach (var token in TokenizeBuffer(buffer, readChars))
+            while ((readChars = textReader.Read(_buffer, 0, ChunkSize)) > 0)
+                foreach (var token in TokenizeBuffer(readChars))
                     yield return token;
 
             var lastToken = _tokenizerStateMachine.Finish();
@@ -32,11 +32,11 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization
             yield return Token.DelimiterToken;
         }
 
-        private IEnumerable<Token> TokenizeBuffer(IReadOnlyList<char> buffer, int readChars)
+        private IEnumerable<Token> TokenizeBuffer(int readChars)
         {
             for (var index = 0; index < readChars; index++)
             {
-                var character = buffer[index];
+                var character = _buffer[index];
                 var result = _tokenizerStateMachine.AcceptNextCharacter(character);
 
                 if (result.HasValue)
