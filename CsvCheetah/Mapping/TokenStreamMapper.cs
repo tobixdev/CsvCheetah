@@ -25,6 +25,9 @@ namespace tobixdev.github.io.CsvCheetah.Mapping
                 switch (token.TokenType)
                 {
                     case TokenType.Value:
+                        if(_currentProperty >= _setters.Length)
+                            continue;
+
                         _setters[_currentProperty].Invoke(_currentObject, token.Value);
                         _currentProperty++;
                         break;
