@@ -77,13 +77,14 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization.StateMachine.States
         }
         
         [Test]
-        public void AcceptNextCharacter_WithNewLine_ReturnsNewValueToken()
+        public void AcceptNextCharacter_WithCarriageReturn_SetsCorrectState()
         {
             WithCurrentToken("read token");
-            var result = _sut.AcceptNextCharacter(TokenizerStateContext, '\n');
 
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Value, IsA.ValueToken("read token"));
+            var result = _sut.AcceptNextCharacter(TokenizerStateContext, '\r');
+
+            Assert.That(result, Is.Null);
+            Assert.That(TokenizerStateContext.State, Is.InstanceOf<StringMatchingState>());
         }
     }
 }

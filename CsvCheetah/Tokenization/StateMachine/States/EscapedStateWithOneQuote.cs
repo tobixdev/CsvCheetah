@@ -4,12 +4,11 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 {
     public class EscapedStateWithOneQuote : StateBase
     {
-        private readonly StateHolder _stateHolder;
         private readonly ICsvCheetahConfiguration _configuration;
 
-        public EscapedStateWithOneQuote(StateHolder stateHolder, ICsvCheetahConfiguration configuration)
+        public EscapedStateWithOneQuote(StateHolder stateHolder, ICsvCheetahConfiguration configuration) : base(
+            stateHolder)
         {
-            _stateHolder = stateHolder;
             _configuration = configuration;
         }
 
@@ -17,13 +16,13 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
         {
             if (character == '"')
                 return Quote(stateContext);
-            
+
             if (character == _configuration.FieldDelimiter)
                 return TokenFinished(stateContext);
-            
-            if (character == '\n')
-                return RecordFinished(stateContext);
-            
+
+            if (character == '\r')
+                return StartOfRecordDelimiter(stateContext);
+
             return NormalCharacter();
         }
 
@@ -34,21 +33,15 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 
         private Token? TokenFinished(ITokenizerStateContext stateContext)
         {
-            stateContext.State = _stateHolder.Default;
+            stateContext.State = StateHolder.Default;
             return Token.CreateValueToken(stateContext.ResetToken());
         }
 
         private Token? Quote(ITokenizerStateContext stateContext)
         {
-            stateContext.State = _stateHolder.Escaped;
+            stateContext.State = StateHolder.Escaped;
             stateContext.AppendCharacter('"');
             return null;
-        }
-
-        private Token? RecordFinished(ITokenizerStateContext stateContext)
-        {
-            stateContext.WasLastTokenInRecord = true;
-            return Token.CreateValueToken(stateContext.ResetToken());
         }
 
         private Token? NormalCharacter()

@@ -4,12 +4,10 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 {
     public class DefaultState : StateBase
     {
-        private readonly StateHolder _stateHolder;
         private readonly ICsvCheetahConfiguration _configuration;
 
-        public DefaultState(StateHolder stateHolder, ICsvCheetahConfiguration configuration)
+        public DefaultState(StateHolder stateHolder, ICsvCheetahConfiguration configuration) : base(stateHolder)
         {
-            _stateHolder = stateHolder;
             _configuration = configuration;
         }
 
@@ -17,13 +15,13 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
         {
             if (character == _configuration.FieldDelimiter)
                 return TokenFinished(stateContext);
-            
+
             if (character == '"')
                 return Quote(stateContext);
-            
+
             if (character == '\r')
                 return StartOfRecordDelimiter(stateContext);
-            
+
             return NormalCharacter(stateContext, character);
         }
 
@@ -39,7 +37,7 @@ namespace tobixdev.github.io.CsvCheetah.Tokenization.StateMachine.States
 
         private Token? Quote(ITokenizerStateContext stateContext)
         {
-            stateContext.State = _stateHolder.Escaped;
+            stateContext.State = StateHolder.Escaped;
             // TODO Throw error, if quote not at start
             return null;
         }

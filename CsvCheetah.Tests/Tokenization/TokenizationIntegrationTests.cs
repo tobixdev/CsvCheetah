@@ -48,13 +48,15 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Tokenization
                 result = _sut.Tokenize(reader).ToArray();
             }
             
-            Assert.That(result, Has.Length.EqualTo(6));
+            Assert.That(result, Has.Length.EqualTo(8));
             Assert.That(result[0], IsA.ValueToken("Hello"));
             Assert.That(result[1], IsA.ValueToken("I"));
             Assert.That(result[2], IsA.ValueToken("contain"));
             Assert.That(result[3], IsA.ValueToken("a"));
             Assert.That(result[4], IsA.ValueToken(@""""));
             Assert.That(result[5], IsA.RecordDelimiterToken());
+            Assert.That(result[6], IsA.ValueToken("Test"));
+            Assert.That(result[7], IsA.RecordDelimiterToken());
         }
 
         [Test]
