@@ -3,7 +3,7 @@ using NUnit.Framework;
 using tobixdev.github.io.CsvCheetah.Mapping;
 using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 
-namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.ConversionRegistry
+namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion
 {
     [TestFixture]
     public class ConverterRegistryTests
