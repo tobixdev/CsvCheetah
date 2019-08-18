@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using CsvHelper;
 using tobixdev.github.io.CsvCheetah.Mapping;
 using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
@@ -73,6 +74,33 @@ longer column"",but, there, is still more,
             
             _mapper.Map(tokens).Count();
         }
+
+        [Benchmark]
+        public void CsvHelper()
+        {
+            using var fileStream = File.Open(_tempFilePath, FileMode.Open);
+            using var fileReader = new StreamReader(fileStream);
+
+            using var csvReader = new CsvReader(fileReader);
+
+            csvReader.Configuration.RegisterClassMap<BenchmarkDataClassMap>();
+
+            csvReader.GetRecords<BenchmarkDataClass>().Count();
+        }
         
+        sealed class BenchmarkDataClassMap : CsvHelper.Configuration.ClassMap<BenchmarkDataClass>
+        {
+            public BenchmarkDataClassMap()
+            {
+                Map(m => m.Field1).Index(0);
+                Map(m => m.Field2).Index(1);
+                Map(m => m.Field3).Index(2);
+                Map(m => m.Field4).Index(3);
+                Map(m => m.Field5).Index(4);
+                Map(m => m.Field6).Index(5);
+                Map(m => m.Field7).Index(6);
+            }
+        }
+
     }
 }
