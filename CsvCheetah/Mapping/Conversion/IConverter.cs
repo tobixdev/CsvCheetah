@@ -1,7 +1,7 @@
 namespace tobixdev.github.io.CsvCheetah.Mapping.Conversion
 {
-    public interface IConverter<out T>
+    public interface IConverter
     {
-        T Convert(string value);
+        object Convert(string value);
     }
 }

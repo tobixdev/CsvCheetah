@@ -5,9 +5,9 @@ using tobixdev.github.io.CsvCheetah.Mapping.Conversion.PrimitiveConverter;
 
 namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion.PrimitiveConverter
 {
-    public class Int16ConverterTests : IntConverterTestBase<short>
+    public class Int16ConverterTests : IntConverterTestBase
     {
-        private IConverter<short> _sut;
+        private IConverter _sut;
 
         [SetUp]
         public void SetUp()
@@ -15,7 +15,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion.PrimitiveConver
             _sut = new Int16Converter();
         }
 
-        protected override short Convert(string value)
+        protected override object Convert(string value)
         {
             return _sut.Convert(value);
         }

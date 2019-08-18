@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 
 namespace tobixdev.github.io.CsvCheetah.Mapping.Mappers
@@ -7,19 +8,40 @@ namespace tobixdev.github.io.CsvCheetah.Mapping.Mappers
     public class MapperFactory<T> : IMapperFactory<T> where T : class
     {
         private readonly Action<T, object> _emptyAction = (a, b) => { };
+
+        private readonly IConverterRegistry _converterRegistry;
         
+        public MapperFactory(IConverterRegistry converterRegistry)
+        {
+            _converterRegistry = converterRegistry;
+        }
+
         public ITokenStreamMapper<T> CreateForMap(IMap<T> map)
         {
-            var setters = new Action<T, object>[map.ColumnCount];
-
-            for (var i = 0; i < map.ColumnCount; i++)
-                setters[i] = GetDelegateForIndex(i);
+            var setters = CreateSetterDelegates();
+            var converters = GetConverters();
             
-            return new TokenStreamMapper<T>(setters);
+            return new TokenStreamMapper<T>(setters, converters);
 
-            Action<T, object> GetDelegateForIndex(int index)
+            Action<T, object>[] CreateSetterDelegates()
             {
-                return map.HasDefinitionForColumn(index) ? GetPropSetter(map.GetTargetPropertyName(index)) : _emptyAction;
+                var result = new Action<T, object>[map.ColumnCount];
+                for (var i = 0; i < map.ColumnCount; i++)
+                    result[i] = map.HasDefinitionForColumn(i) ? GetPropSetter(map.GetTargetPropertyName(i)) : _emptyAction;
+                return result;
+            }
+
+            IConverter[] GetConverters()
+            {
+                var result = new IConverter[map.ColumnCount];
+
+                for (var i = 0; i < map.ColumnCount; i++)
+                {
+                    var targetType = map.GetTargetPropertyType(i);
+                    result[i] = _converterRegistry.GetConverter(targetType);
+                }
+
+                return result;
             }
         }
 

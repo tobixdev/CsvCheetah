@@ -19,19 +19,19 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion
         [Test]
         public void GetConverter_WithNonExistingEntry_ThrowsMappingException()
         {
-            TestDelegate act = () =>_sut.GetConverter<int>();
+            void Act() => _sut.GetConverter(typeof(int));
 
-            var exception = Assert.Throws<MappingException>(act);
+            var exception = Assert.Throws<MappingException>(Act);
             Assert.That(exception.Message, Is.EqualTo("No converter for type Int32."));
         }
 
         [Test]
         public void GetConverter_WithExistingEntry_ReturnsCorrectEntry()
         {
-            var converter = A.Fake<IConverter<int>>();
-            _sut.RegisterConverter(converter);
+            var converter = A.Fake<IConverter>();
+            _sut.RegisterConverter(typeof(int), converter);
             
-            var result = _sut.GetConverter<int>();
+            var result = _sut.GetConverter(typeof(int));
 
             Assert.That(result, Is.SameAs(converter));
         }
@@ -39,13 +39,13 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion
         [Test]
         public void RegisterConverter_WithExistingEntry_OverridesOldEntry()
         {
-            var oldConverter = A.Fake<IConverter<int>>();
-            _sut.RegisterConverter(oldConverter);
-            var newConverter = A.Fake<IConverter<int>>();
+            var oldConverter = A.Fake<IConverter>();
+            _sut.RegisterConverter(typeof(int), oldConverter);
+            var newConverter = A.Fake<IConverter>();
             
-            _sut.RegisterConverter(newConverter);
+            _sut.RegisterConverter(typeof(int), newConverter);
             
-            var result = _sut.GetConverter<int>();
+            var result = _sut.GetConverter(typeof(int));
             Assert.That(result, Is.SameAs(newConverter));
         }
     }

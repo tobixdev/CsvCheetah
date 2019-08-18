@@ -4,9 +4,9 @@ using Int32Converter = tobixdev.github.io.CsvCheetah.Mapping.Conversion.Primitiv
 
 namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion.PrimitiveConverter
 {
-    public class Int32ConverterTests : IntConverterTestBase<int>
+    public class Int32ConverterTests : IntConverterTestBase
     {
-        private IConverter<int> _sut;
+        private IConverter _sut;
 
         [SetUp]
         public void SetUp()
@@ -14,7 +14,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion.PrimitiveConver
             _sut = new Int32Converter();
         }
 
-        protected override int Convert(string value)
+        protected override object Convert(string value)
         {
             return _sut.Convert(value);
         }

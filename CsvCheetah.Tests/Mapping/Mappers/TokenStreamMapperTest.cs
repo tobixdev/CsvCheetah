@@ -1,6 +1,7 @@
 using System.Linq;
 using NUnit.Framework;
 using tobixdev.github.io.CsvCheetah.Mapping;
+using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
 using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 
@@ -90,7 +91,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Mappers
 
         private ITokenStreamMapper<T> CreateTokenStreamMapper<T>(IMap<T> map) where T : class
         {
-            var tokenStreamMapperFactory = new MapperFactory<T>();
+            var tokenStreamMapperFactory = new MapperFactory<T>(ConverterRegistry.CreateDefaultInstance());
             return tokenStreamMapperFactory.CreateForMap(map);
         }
         

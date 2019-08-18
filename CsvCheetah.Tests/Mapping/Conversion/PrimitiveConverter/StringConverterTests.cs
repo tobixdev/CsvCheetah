@@ -7,7 +7,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion.PrimitiveConver
 {
     public class StringConverterTests
     {
-        private IConverter<string> _sut;
+        private IConverter _sut;
 
         [SetUp]
         public void SetUp()

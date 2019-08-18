@@ -1,6 +1,7 @@
 using System.Linq;
 using NUnit.Framework;
 using tobixdev.github.io.CsvCheetah.Mapping;
+using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
 using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 using tobixdev.github.io.CsvCheetah.Tokenization;
@@ -25,7 +26,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests
                 .WithColumn(1, s => s.Capital)
                 .Build();
             
-            _sut = new MapperFactory<State>().CreateForMap(map);
+            _sut = new MapperFactory<State>(ConverterRegistry.CreateDefaultInstance()).CreateForMap(map);
         }
 
         [Test]

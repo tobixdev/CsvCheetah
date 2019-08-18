@@ -1,10 +1,10 @@
 namespace tobixdev.github.io.CsvCheetah.Mapping.Conversion
 {
-    public abstract class SimpleConverterBase<T> : IConverter<T>
+    public abstract class SimpleConverterBase<T> : IConverter
     {
         protected abstract bool TryParse(string value, out T parsedValue);
         
-        public T Convert(string value)
+        public object Convert(string value)
         {
             var canConvert = TryParse(value, out var parsedValue);
             

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 
 namespace tobixdev.github.io.CsvCheetah.Mapping.Mappers
 {
@@ -7,13 +8,15 @@ namespace tobixdev.github.io.CsvCheetah.Mapping.Mappers
         where T : class
     {
         private readonly Action<T, object>[] _setters;
+        private readonly IConverter[] _converters;
 
         private int _currentProperty;
         private T? _currentObject;
 
-        public TokenStreamMapper(Action<T, object>[] setters)
+        public TokenStreamMapper(Action<T, object>[] setters, IConverter[] converters)
         {
             _setters = setters;
+            _converters = converters;
         }
 
         public IEnumerable<T> Map(IEnumerable<Token> tokenStream)
@@ -28,7 +31,8 @@ namespace tobixdev.github.io.CsvCheetah.Mapping.Mappers
                         if(_currentProperty >= _setters.Length)
                             continue;
 
-                        _setters[_currentProperty].Invoke(_currentObject, token.Value);
+                        var convertedValue = _converters[_currentProperty].Convert(token.Value);
+                        _setters[_currentProperty].Invoke(_currentObject, convertedValue);
                         _currentProperty++;
                         break;
 

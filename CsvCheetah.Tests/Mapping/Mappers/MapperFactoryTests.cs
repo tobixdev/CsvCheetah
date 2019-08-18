@@ -1,5 +1,6 @@
 using System.Linq;
 using NUnit.Framework;
+using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
 using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 
@@ -13,7 +14,7 @@ namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Mappers
         [SetUp]
         public void SetUp()
         {
-            _sut = new MapperFactory<TestDataClass>();
+            _sut = new MapperFactory<TestDataClass>(ConverterRegistry.CreateDefaultInstance());
         }
 
         [Test]

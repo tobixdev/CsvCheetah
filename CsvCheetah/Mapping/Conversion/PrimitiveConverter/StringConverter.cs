@@ -1,8 +1,8 @@
 namespace tobixdev.github.io.CsvCheetah.Mapping.Conversion.PrimitiveConverter
 {
-    public class StringConverter : IConverter<string>
+    public class StringConverter : IConverter
     {
-        public string Convert(string value)
+        public object Convert(string value)
         {
             return value;
         }

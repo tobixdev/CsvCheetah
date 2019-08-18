@@ -4,9 +4,9 @@ using tobixdev.github.io.CsvCheetah.Mapping;
 
 namespace tobixdev.github.io.CsvCheetah.Tests.Mapping.Conversion.PrimitiveConverter
 {
-    public abstract class IntConverterTestBase<T> where T : struct
+    public abstract class IntConverterTestBase
     {
-        protected abstract T Convert(string value);
+        protected abstract object Convert(string value);
         protected abstract string ExpectedTypeName { get; }
 
         [Test]

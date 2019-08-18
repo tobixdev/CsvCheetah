@@ -3,10 +3,9 @@ using System.Linq.Expressions;
 
 namespace tobixdev.github.io.CsvCheetah.Mapping.Maps
 {
-    public interface IColumnMapBuilder<T>
+    public interface IColumnMapBuilder<TData>
     {
-        // TODO Support data types
-        IColumnMapBuilder<T> WithColumn(int columnIndex, Expression<Func<T, string>> propertyExpression);
-        IMap<T> Build();
+        IColumnMapBuilder<TData> WithColumn<TTarget>(int columnIndex, Expression<Func<TData, TTarget>> propertyExpression);
+        IMap<TData> Build();
     }
 }

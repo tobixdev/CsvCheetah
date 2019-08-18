@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,10 +13,22 @@ namespace tobixdev.github.io.CsvCheetah.Mapping.Maps
             _mappings = new Dictionary<int, string>();
         }
 
+        public Type GetTargetPropertyType(int columnIndex)
+        {
+            if(!HasDefinitionForColumn(columnIndex))
+                throw new MappingException($"No definition found for column {columnIndex}");
+            
+            var name = GetTargetPropertyName(columnIndex);
+            var property = typeof(T).GetProperty(name);
+            
+            return property.PropertyType;
+        }
+
         public int ColumnCount => _mappings.Count == 0 ? 0 : _mappings.Keys.Max() + 1;
 
         public void AddMapping(int column, string propertyName)
         {
+            // TODO Ensure property exists
             _mappings[column] = propertyName;
         }
         

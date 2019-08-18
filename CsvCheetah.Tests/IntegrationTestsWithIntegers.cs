@@ -1,5 +1,6 @@
 using System.Linq;
 using NUnit.Framework;
+using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
 using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 using tobixdev.github.io.CsvCheetah.Tokenization;
@@ -24,14 +25,14 @@ namespace tobixdev.github.io.CsvCheetah.Tests
                 .WithColumn(1, s => s.Population)
                 .Build();
             
-            _sut = new MapperFactory<StatePopulation>().CreateForMap(map);
+            _sut = new MapperFactory<StatePopulation>(ConverterRegistry.CreateDefaultInstance()).CreateForMap(map);
         }
 
         [Test]
         public void Map_WithData_ReturnsCorrectRecords()
         {
             StatePopulation[] result;
-            using (var reader = CreateReaderForTestFile("CapitalsInAustria.csv"))
+            using (var reader = CreateReaderForTestFile("StatePopulation.csv"))
             {
                 result = _sut.Map(_tokenizer.Tokenize(reader)).ToArray();
             }

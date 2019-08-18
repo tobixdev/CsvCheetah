@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using tobixdev.github.io.CsvCheetah.Mapping;
+using tobixdev.github.io.CsvCheetah.Mapping.Conversion;
 using tobixdev.github.io.CsvCheetah.Mapping.Mappers;
 using tobixdev.github.io.CsvCheetah.Mapping.Maps;
 using tobixdev.github.io.CsvCheetah.Tokenization;
@@ -44,7 +45,7 @@ longer column"",but, there, is still more,
                 .WithColumn(5, c => c.Field6)
                 .WithColumn(6, c => c.Field7)
                 .Build();
-            _mapper = new MapperFactory<BenchmarkDataClass>().CreateForMap(map);
+            _mapper = new MapperFactory<BenchmarkDataClass>(ConverterRegistry.CreateDefaultInstance()).CreateForMap(map);
         }
 
         [GlobalCleanup]
